@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ControleFinanceiro.Models;
+using Microsoft.AspNetCore.Mvc;
+using ControleFinanceiro.Models;
 
 namespace ControleFinanceiro.Controllers
 {
@@ -6,11 +8,19 @@ namespace ControleFinanceiro.Controllers
     [Route("[controller]")]
     public class HomeController : Controller
     {
-        [HttpGet]
-        public IActionResult Index()
+        private static List<Estado> listaEstados = new List<Estado>();
+
+        [HttpGet("estados")]
+        public IActionResult GetEstados()
         {
-            string result = "Retorno";
-            return Ok(result);
+            return Ok(listaEstados);
+        }
+
+        [HttpPost("estados")]
+        public IActionResult PostEstado([FromBody]Estado estado)
+        {
+            listaEstados.Add(estado);
+            return Ok("Estado cadastrado com sucesso!");
         }
 
         [HttpGet("info2")]
